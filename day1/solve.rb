@@ -1,25 +1,25 @@
 # part one
-position = 50
-counter_of_zeroes = 0
+# position = 50
+# counter_of_zeroes = 0
 
-input = File.readlines('input.txt')
+# input = File.readlines('input.txt')
 
-input.each do |instruction|
-  direction = instruction[0]
-  distance = instruction[1..5].to_i
+# input.each do |instruction|
+#   direction = instruction[0]
+#   distance = instruction[1..5].to_i
 
-  if direction == 'L'
-    position = position - distance
-    while position < 0
-      position = position + 100
-    end
-  else
-    position = position + distance
-    while position > 99
-      position = position - 100
-      p position
-    end
-  end
+#   if direction == 'L'
+#     position = position - distance
+#     while position < 0
+#       position = position + 100
+#     end
+#   else
+#     position = position + distance
+#     while position > 99
+#       position = position - 100
+#       p position
+#     end
+#   end
 
   #if position == 0
   #p '----'
@@ -28,13 +28,13 @@ input.each do |instruction|
   #p direction
   #end
 
-  if position == 0
-    counter_of_zeroes += 1
-  end
+#   if position == 0
+#     counter_of_zeroes += 1
+#   end
 
-end
+# end
 
-p counter_of_zeroes
+# p counter_of_zeroes
 
 # part 2
 position = 50
@@ -45,18 +45,34 @@ File.readlines("input.txt").each do |instruction|
   distance  = instruction[1..].to_i
 
   if direction == "R"
-    goes_all_the_way_around = (position + distance) / 100
-    count += goes_all_the_way_around
+    if position == 0
+      crosses = (position + distance - 1) / 100
+    else
+      crosses = (position + distance) / 100
+    end
+    count += crosses
 
     position = (position + distance) % 100
+    if position == 0 && crosses == 0
+      count += 1
+    end
   else
-    goes_all_the_way_around = (distance - position + 99) / 100
-    count += goes_all_the_way_around
+    if position == 0
+      crosses = (distance - 1) / 100
+    else
+      if distance > position
+        crosses = (distance - position - 1) / 100 + 1
+      else
+        crosses = 0
+      end
+    end
+    count += crosses
 
     position = (position - distance) % 100
+    if position == 0 && crosses == 0
+      count += 1
+    end
   end
-
-  count += 1 if position == 0
 end
 
 p count
