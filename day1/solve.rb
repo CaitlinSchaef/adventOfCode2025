@@ -1,3 +1,4 @@
+# part one
 position = 50
 counter_of_zeroes = 0
 
@@ -34,6 +35,31 @@ input.each do |instruction|
 end
 
 p counter_of_zeroes
+
+# part 2
+position = 50
+count = 0
+
+File.readlines("input.txt").each do |instruction|
+  direction = instruction[0]
+  distance  = instruction[1..].to_i
+
+  if direction == "R"
+    goes_all_the_way_around = (position + distance) / 100
+    count += goes_all_the_way_around
+
+    position = (position + distance) % 100
+  else
+    goes_all_the_way_around = (distance - position + 99) / 100
+    count += goes_all_the_way_around
+
+    position = (position - distance) % 100
+  end
+
+  count += 1 if position == 0
+end
+
+p count
 
 
 # Or something like:
